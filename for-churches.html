@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Churches - South Florida Psalter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --navy: #1a1a2e;
+            --gold: #d4a574;
+            --cream: #f5f0e8;
+            --burgundy: #6b2737;
+            --green: #2d4a3e;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: var(--navy);
+            background-color: var(--cream);
+            line-height: 1.8;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--navy);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav ul li a {
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 400;
+        }
+        
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--cream);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--burgundy) 0%, var(--navy) 100%);
+            color: var(--cream);
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            color: var(--cream);
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.4rem;
+            color: var(--gold);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Content Sections */
+        section {
+            padding: 5rem 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Why Section */
+        .why-section {
+            background-color: white;
+        }
+        
+        .why-section h2 {
+            font-size: 2.5rem;
+            color: var(--burgundy);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .why-card {
+            background-color: var(--cream);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .why-card h3 {
+            font-size: 1.6rem;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        
+        .why-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        /* How to Start */
+        .how-section {
+            background-color: var(--cream);
+        }
+        
+        .how-section h2 {
+            font-size: 2.5rem;
+            color: var(--burgundy);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .steps {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            background-color: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--gold);
+        }
+        
+        .step-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .step h3 {
+            font-size: 1.8rem;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        
+        .step p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        /* Resources */
+        .resources-section {
+            background-color: white;
+        }
+        
+        .resources-section h2 {
+            font-size: 2.5rem;
+            color: var(--burgundy);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .resource-card {
+            background: linear-gradient(135deg, var(--green) 0%, var(--navy) 100%);
+            color: var(--cream);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .resource-card h3 {
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .resource-card a {
+            display: inline-block;
+            background-color: var(--gold);
+            color: var(--navy);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .resource-card a:hover {
+            background-color: var(--cream);
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--burgundy) 100%);
+            color: var(--cream);
+            text-align: center;
+        }
+        
+        .contact-section h2 {
+            font-size: 2.5rem;
+            color: var(--cream);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-section p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            color: var(--navy);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--gold);
+            border-radius: 5px;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .submit-button {
+            background-color: var(--burgundy);
+            color: var(--cream);
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .submit-button:hover {
+            background-color: var(--navy);
+            transform: translateY(-2px);
+        }
+        
+        .form-note {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--navy);
+            opacity: 0.7;
+        }
+        
+        /* Testimonials */
+        .testimonials-section {
+            background-color: var(--cream);
+        }
+        
+        .testimonials-section h2 {
+            font-size: 2.5rem;
+            color: var(--burgundy);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .testimonial {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--gold);
+        }
+        
+        .testimonial-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--burgundy);
+        }
+        
+        .testimonial-placeholder {
+            text-align: center;
+            color: var(--navy);
+            opacity: 0.6;
+            font-style: italic;
+            padding: 3rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--navy);
+            color: var(--cream);
+            padding: 3rem 2rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--cream);
+        }
+        
+        .footer-tagline {
+            font-style: italic;
+            color: var(--gold);
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(245, 240, 232, 0.7);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--navy);
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .why-grid,
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">South Florida Psalter</a>
+            <button class="mobile-toggle" onclick="toggleMenu()">☰</button>
+            <ul id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="psalms.html">Psalms</a></li>
+                <li><a href="vision.html">Vision</a></li>
+                <li><a href="articles.html">Articles</a></li>
+                <li><a href="for-churches.html">For Churches</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>Bring the Psalms to Your Church</h1>
+        <p>Join the movement to restore Scripture-singing to Christian worship</p>
+    </div>
+
+    <section class="why-section">
+        <div class="container">
+            <h2>Why Churches Should Sing the Psalms</h2>
+            <div class="why-grid">
+                <div class="why-card">
+                    <h3>Biblical Obedience</h3>
+                    <p>Paul commands us to sing "psalms, hymns, and spiritual songs" (Col. 3:16, Eph. 5:19). The early church took this literally—singing Scripture itself in worship.</p>
+                </div>
+                <div class="why-card">
+                    <h3>Theological Formation</h3>
+                    <p>The Psalms cover the full spectrum of biblical theology. Singing them shapes how your congregation thinks about God, sin, redemption, and hope.</p>
+                </div>
+                <div class="why-card">
+                    <h3>Emotional Honesty</h3>
+                    <p>The Psalms give voice to lament, confession, doubt, and struggle—not just triumph. They teach your people to bring their whole selves before God.</p>
+                </div>
+                <div class="why-card">
+                    <h3>Scripture Memorization</h3>
+                    <p>What we sing, we remember. Children who grow up singing Psalm 23 carry it with them for life. Music is one of God's tools for hiding His word in our hearts.</p>
+                </div>
+                <div class="why-card">
+                    <h3>Historical Continuity</h3>
+                    <p>When your church sings the Psalms, you join your voice with Jesus, the apostles, the martyrs, and the Reformers. You connect to the whole church across time.</p>
+                </div>
+                <div class="why-card">
+                    <h3>Christ-Centered Worship</h3>
+                    <p>The Psalms point to Christ on every page. Singing them trains your congregation to see the gospel woven through all of Scripture.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-section">
+        <div class="container">
+            <h2>How to Get Started</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Start Small</h3>
+                    <p>You don't need to overhaul your entire worship service. Begin by introducing one psalm per month. Choose well-known psalms like Psalm 23, 100, or 46. Let your congregation get familiar with singing Scripture.</p>
+                    <p>Consider using psalms during communion, offering, or as a call to worship. These natural liturgical moments are perfect entry points.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Use Available Resources</h3>
+                    <p>The South Florida Psalter provides all 150 psalms set to music and freely available on YouTube. You can easily incorporate these into worship by projecting lyrics or using them in small groups and family worship.</p>
+                    <p>Pray150.com offers additional resources for personal and corporate psalm-singing, including printable psalm cards and devotional guides.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Teach Your Congregation</h3>
+                    <p>Help your people understand <em>why</em> they're singing the Psalms. Preach on the biblical call to psalm-singing. Share the history of how the church has always sung Scripture. Explain how the Psalms form us spiritually.</p>
+                    <p>When people understand the "why," they embrace the practice with joy rather than seeing it as an obligation or tradition.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="resources-section">
+        <div class="container">
+            <h2>Available Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3>YouTube Playlist</h3>
+                    <p>All 150 Psalms set to music, freely available for worship, devotion, and study.</p>
+                    <a href="https://www.youtube.com/playlist?list=PLmCYMN7HLjZ3sptw2DLvvOjXMUJKG_FIv" target="_blank">Watch Playlist</a>
+                </div>
+                <div class="resource-card">
+                    <h3>Pray150.com</h3>
+                    <p>Tools and resources for praying through all 150 Psalms in daily and corporate settings.</p>
+                    <a href="https://pray150.com" target="_blank">Visit Site</a>
+                </div>
+                <div class="resource-card">
+                    <h3>Downloadable Materials</h3>
+                    <p>Lyrics, chord charts, and worship guides for easy integration into your services.</p>
+                    <a href="#contact">Request Access</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="container">
+            <h2>What Churches Are Saying</h2>
+            <div class="testimonial-placeholder">
+                <p>Churches are just beginning to discover the South Florida Psalter. <br>Your testimony could be here! <a href="#contact" style="color: var(--burgundy); text-decoration: underline;">Contact us</a> to share your experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <p>Interested in bringing the Psalms to your church? Have questions about implementation? Want to share your story? We'd love to hear from you.</p>
+            <div class="contact-form">
+                <form action="#" method="POST" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="church">Church Name</label>
+                        <input type="text" id="church" name="church">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Send Message</button>
+                    <p class="form-note">* Required fields</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://www.youtube.com/playlist?list=PLmCYMN7HLjZ3sptw2DLvvOjXMUJKG_FIv" target="_blank">YouTube Playlist</a>
+                <a href="https://pray150.com" target="_blank">Pray150.com</a>
+                <a href="for-churches.html">Contact</a>
+            </div>
+            <p class="footer-tagline">Restoring the Psalms to the Worship of the Church</p>
+            <p class="copyright">© 2026 South Florida Psalter. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+        
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('Thank you for your interest! This form is currently a placeholder. Please contact us directly via YouTube or Pray150.com.');
+            return false;
+        }
+    </script>
+</body>
+</html>

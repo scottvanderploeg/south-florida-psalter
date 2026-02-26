@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Vision - South Florida Psalter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --navy: #1a1a2e;
+            --gold: #d4a574;
+            --cream: #f5f0e8;
+            --burgundy: #6b2737;
+            --green: #2d4a3e;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: var(--navy);
+            background-color: var(--cream);
+            line-height: 1.8;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--navy);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav ul li a {
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 400;
+        }
+        
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--cream);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--burgundy) 0%, var(--navy) 100%);
+            color: var(--cream);
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            color: var(--cream);
+            margin-bottom: 1rem;
+        }
+        
+        .page-header .subtitle {
+            font-size: 1.3rem;
+            color: var(--gold);
+            font-style: italic;
+        }
+        
+        /* Content */
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            background-color: white;
+        }
+        
+        .content h2 {
+            font-size: 2.2rem;
+            color: var(--burgundy);
+            margin: 3rem 0 1.5rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--gold);
+        }
+        
+        .content h2:first-of-type {
+            border-top: none;
+            padding-top: 0;
+            margin-top: 0;
+        }
+        
+        .content h3 {
+            font-size: 1.6rem;
+            color: var(--navy);
+            margin: 2rem 0 1rem;
+        }
+        
+        .content h4 {
+            font-size: 1.3rem;
+            color: var(--green);
+            margin: 1.5rem 0 0.8rem;
+        }
+        
+        .content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+        
+        .content ul {
+            margin: 1rem 0 1.5rem 2rem;
+            line-height: 1.9;
+        }
+        
+        .content li {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Blockquotes */
+        blockquote {
+            background-color: var(--cream);
+            border-left: 5px solid var(--gold);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--navy);
+            font-size: 1.15rem;
+        }
+        
+        blockquote cite {
+            display: block;
+            margin-top: 1rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--burgundy);
+            font-size: 1rem;
+        }
+        
+        /* Pull Quotes */
+        .pull-quote {
+            background: linear-gradient(135deg, var(--green) 0%, var(--navy) 100%);
+            color: var(--cream);
+            padding: 2.5rem;
+            margin: 3rem 0;
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--navy);
+            color: var(--cream);
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--cream);
+        }
+        
+        .footer-tagline {
+            font-style: italic;
+            color: var(--gold);
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(245, 240, 232, 0.7);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--navy);
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .content h2 {
+                font-size: 1.8rem;
+            }
+            
+            blockquote {
+                padding: 1rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">South Florida Psalter</a>
+            <button class="mobile-toggle" onclick="toggleMenu()">☰</button>
+            <ul id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="psalms.html">Psalms</a></li>
+                <li><a href="chord-charts.html">Chord Charts</a></li>
+                <li><a href="review/">Review</a></li>
+                <li><a href="vision.html">Vision</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>Our Vision</h1>
+        <p class="subtitle">95 Theses on the Psalms</p>
+    </div>
+
+    <div class="content">
+        <p><em>By Scott Vander Ploeg</em></p>
+        
+        <h2>The Psalms are Prayers</h2>
+        
+        <p>The Psalter is the Prayer book of the Bible.</p>
+        
+        <blockquote>
+            "This concludes the prayers of David son of Jesse."
+            <cite>— Psalm 72:20</cite>
+        </blockquote>
+        
+        <p>These prayers are powerful!</p>
+        
+        <blockquote>
+            "Whenever the Psalter is abandoned, an incomparable treasure vanishes from the Christian church. With its recovery will come unsuspected power."
+            <cite>— Dietrich Bonhoeffer</cite>
+        </blockquote>
+        
+        <p>It is remarkable that Scripture (the Word of God) contains prayers (words directed to God). Therefore, through the Psalms, God teaches His people how to pray.</p>
+        
+        <p>The disciples of Jesus asked "Lord, teach us to pray." In response, Jesus gave us the 'Lord's Prayer.' So, it follows that the Lord's Prayer stands in relation to all biblical prayer (the Psalms specifically) in the same way that the Two Greatest Commandments stand in relation to the Law and the Prophets.</p>
+        
+        <blockquote>
+            "It [the Psalter] penetrates the Lord's Prayer and the Lord's Prayer penetrates it, so that it is possible to understand one on the basis of the other and to bring them into joyful harmony."
+            <cite>— Martin Luther</cite>
+        </blockquote>
+        
+        <p>The Psalms are designed for both corporate worship and personal daily prayer. The practice of praying the Psalms publicly and personally is an exercise in reframing all of life toward the Gospel of Jesus Christ.</p>
+        
+        <h3>On Human Prayer and Its Limitations</h3>
+        
+        <p>God created all people with the capacity to pray (innate desire and longing, made to worship). However, fallen humans (separated from the presence of God) do not innately know how or what to pray.</p>
+        
+        <blockquote>
+            "We confuse wishes, hopes, sighs, laments, rejoicing—all of which the heart can do by itself—with prayer."
+            <cite>— Dietrich Bonhoeffer</cite>
+        </blockquote>
+        
+        <h2>The Psalms as Songs</h2>
+        
+        <p>The Psalms were written with the express intent of becoming songs. The native habitat of the Psalms is in music, and throughout history they have been sung to many tunes. The lyrics are inspired, but there is no 'codified' music. Musical styles and tastes vary from generation to generation and from culture to culture.</p>
+        
+        <p>Therefore, integral to the missional heart of God, there is an expectation that every new culture and generation will sing the Psalms "with a new song."</p>
+        
+        <blockquote>
+            "Sing to the Lord a new song; sing to the Lord, all the earth. Sing to the Lord, praise his name; proclaim his salvation day after day. Declare his glory among the nations, his marvelous deeds among all peoples."
+            <cite>— Psalm 96:1-3</cite>
+        </blockquote>
+        
+        <div class="pull-quote">
+            "Ah, there is not the juice, the strength, the passion, the fire which I find in the Psalter."
+        </div>
+        
+        <blockquote>
+            "When we have looked thoroughly, and searched here and there, we shall not find better songs nor more fitting for the purpose [of worship], than the Psalms of David, which the Holy Spirit spoke and made through Him."
+            <cite>— John Calvin</cite>
+        </blockquote>
+        
+        <p>Whoever has begun to pray the Psalter in earnest with regularity will begin to lose interest in non-inspired, 'privately composed' prayers, hymns, and songs.</p>
+        
+        <h2>Christ in the Psalms</h2>
+        
+        <h3>David as Prototype of Christ</h3>
+        
+        <p>David is a prototype of Jesus Christ. The events of his life and his experience of these events point forward to the One who will proceed from him.</p>
+        
+        <blockquote>
+            "He was a prophet and knew that God had promised him on oath that he would place one of his descendants on his throne. Seeing what was to come, he spoke of the resurrection of the Messiah."
+            <cite>— Acts 2:30-31</cite>
+        </blockquote>
+        
+        <p>Christ prayed these prayers through the original authors. Both the one who makes people holy and those who are made holy are of the same family. So Jesus is not ashamed to call them brothers and sisters.</p>
+        
+        <h3>Jesus Prayed the Psalms</h3>
+        
+        <p>Jesus directly quoted the Psalms throughout His ministry. Here are just a few examples:</p>
+        
+        <ul>
+            <li><strong>Matthew 27:46</strong> — "My God, my God, why have you forsaken me?" (Psalm 22:1)</li>
+            <li><strong>Luke 23:46</strong> — "Father, into your hands I commit my spirit!" (Psalm 31:5)</li>
+            <li><strong>Matthew 21:42</strong> — "The stone the builders rejected has become the cornerstone" (Psalm 118:22-23)</li>
+            <li><strong>Matthew 22:44</strong> — "The Lord said to my Lord: Sit at my right hand..." (Psalm 110:1)</li>
+        </ul>
+        
+        <p>Christ is the subject of the Psalms. As Jesus himself taught: "Everything must be fulfilled that is written about me in the Law of Moses, the Prophets and the Psalms" (Luke 24:44-47).</p>
+        
+        <div class="pull-quote">
+            So we pray the Psalms after Jesus, with Jesus, to Jesus, and through Jesus.
+        </div>
+        
+        <h2>The Divine Arrangement</h2>
+        
+        <p>The 150 prayers have been intentionally ordered and arranged—not gathered randomly. This order is part of the divine inspiration.</p>
+        
+        <p>The Book of Psalms is a <strong>collection of collections</strong>, organized into five books, echoing the Five Books of Torah:</p>
+        
+        <ul>
+            <li><strong>Book 1:</strong> Psalms 1-41</li>
+            <li><strong>Book 2:</strong> Psalms 42-72</li>
+            <li><strong>Book 3:</strong> Psalms 73-89</li>
+            <li><strong>Book 4:</strong> Psalms 90-106</li>
+            <li><strong>Book 5:</strong> Psalms 107-150</li>
+        </ul>
+        
+        <p>Each book concludes with a similar doxology: "May the Lord, the God of Israel, be blessed forever. Amen and Amen."</p>
+        
+        <h3>From Suffering to Praise</h3>
+        
+        <p>Psalms of Lament concentrate near the beginning; Psalms of Praise toward the end. Praying through the Psalms moves us through grief to praise. The final five "Hallelujah" Psalms punctuate this journey.</p>
+        
+        <h3>Return to the Presence of God</h3>
+        
+        <p>Psalm 1's "tree planted by streams of water" alludes to the tree of life in Eden. Humanity has been exiled from God's presence. The Psalter is designed as a <strong>'virtual temple'</strong>—connecting God's people to His presence through prayer.</p>
+        
+        <p>Through praying the Psalms we join with God's people to "Praise God in his sanctuary" (Psalm 150:1).</p>
+        
+        <h2>Historical Use in Worship</h2>
+        
+        <h3>The Early Church</h3>
+        
+        <p>Tertullian (2nd century) described worship that revolved around Scripture and Psalms. Jerome (4th century) noted that Psalms were sung everywhere in the Christian world.</p>
+        
+        <p>Church councils at Laodicea (381 AD), Chalcedon (451 AD), Braga (561 AD), and Toledo (7th century) all emphasized or mandated the use of Psalms in worship. Church leaders were expected to memorize the entire Psalter.</p>
+        
+        <h3>The Reformation</h3>
+        
+        <p>The Genevan Psalter became hugely popular across Europe. French Huguenots were known as "Psalm-singers." Scottish Covenanters drew comfort from Psalms in persecution. By the 16th-17th centuries, Psalms were sung by virtually every Christian tradition.</p>
+        
+        <h3>The Modern Shift</h3>
+        
+        <p>Isaac Watts (18th century) championed singability and accessible melodies. The Wesley Brothers brought emotional fervor through the Methodist revival. Together, they ushered in a new era of hymn writing.</p>
+        
+        <p>The 20th century brought Contemporary Christian Music—churches navigated a spectrum of hymns, CCM, and blended worship.</p>
+        
+        <div class="pull-quote">
+            Today, churches navigate many styles of worship—but the Psalms, the almost exclusive foundation of worship for centuries, largely remain on the sidelines.
+        </div>
+        
+        <h2>The Need for a New Psalter</h2>
+        
+        <p>People are suffering and have few resources. The Psalms were designed to be that resource.</p>
+        
+        <ul>
+            <li>The Psalms offer timeless resources for navigating human emotions</li>
+            <li>They validate emotional experience while urging management through reflection, prayer, and Scripture</li>
+            <li>The church must teach people how to pray the Psalms both corporately and individually</li>
+            <li>Music is necessary and aids in memorization</li>
+            <li>We ought not select Psalms at our own discretion—we should proceed through them following the divine arrangement</li>
+        </ul>
+        
+        <p>This is why the South Florida Psalter exists: to restore the ancient songs to the modern church, to give every believer access to the prayers Jesus prayed, and to help God's people worship with the very words He gave us.</p>
+        
+        <div class="pull-quote">
+            The Psalms teach us how to pray, how to lament, how to rejoice, and how to see Christ in all of Scripture.
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="psalms.html">Psalms</a>
+                <a href="chord-charts.html">Chord Charts</a>
+                <a href="review/">Review</a>
+                <a href="https://www.youtube.com/playlist?list=PLmCYMN7HLjZ3sptw2DLvvOjXMUJKG_FIv" target="_blank">YouTube</a>
+            </div>
+            <p class="footer-tagline">Restoring the Psalms to the Worship of the Church</p>
+            <p class="copyright">© 2026 South Florida Psalter. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

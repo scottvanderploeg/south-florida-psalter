@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psalms Browser - South Florida Psalter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --navy: #1a1a2e;
+            --gold: #d4a574;
+            --cream: #f5f0e8;
+            --burgundy: #6b2737;
+            --green: #2d4a3e;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: var(--navy);
+            background-color: var(--cream);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--navy);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav ul li a {
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 400;
+        }
+        
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--cream);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--green) 100%);
+            color: var(--cream);
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            color: var(--cream);
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--gold);
+        }
+        
+        /* Search Section */
+        .search-section {
+            background-color: white;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--gold);
+            border-radius: 50px;
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--cream);
+            transition: box-shadow 0.3s;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(212, 165, 116, 0.3);
+        }
+        
+        /* Psalms List */
+        .psalms-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .book-section {
+            margin-bottom: 3rem;
+        }
+        
+        .book-header {
+            background: linear-gradient(135deg, var(--burgundy) 0%, var(--navy) 100%);
+            color: var(--cream);
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .book-header h2 {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        
+        .book-header p {
+            color: var(--cream);
+            font-size: 1rem;
+        }
+        
+        .psalm-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .psalm-item {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .psalm-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .psalm-info-text {
+            flex: 1;
+        }
+        
+        .psalm-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--burgundy);
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+        
+        .psalm-duration {
+            color: var(--navy);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .play-button {
+            background-color: var(--gold);
+            color: var(--navy);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .play-button:hover {
+            background-color: var(--burgundy);
+            color: var(--cream);
+            transform: scale(1.05);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: var(--burgundy);
+            display: none;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--navy);
+            color: var(--cream);
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--cream);
+        }
+        
+        .footer-tagline {
+            font-style: italic;
+            color: var(--gold);
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(245, 240, 232, 0.7);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--navy);
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .psalm-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .psalm-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">South Florida Psalter</a>
+            <button class="mobile-toggle" onclick="toggleMenu()">☰</button>
+            <ul id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="psalms.html">Psalms</a></li>
+                <li><a href="chord-charts.html">Chord Charts</a></li>
+                <li><a href="review/">Review</a></li>
+                <li><a href="vision.html">Vision</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>All 150 Psalms</h1>
+        <p>Search and listen to the complete Psalter</p>
+    </div>
+
+    <div class="search-section">
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-box" placeholder="Search by psalm number or title...">
+        </div>
+    </div>
+
+    <div class="psalms-section">
+        <div id="psalms-container"></div>
+        <div id="no-results" class="no-results">No psalms found matching your search.</div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="psalms.html">Psalms</a>
+                <a href="chord-charts.html">Chord Charts</a>
+                <a href="review/">Review</a>
+                <a href="https://www.youtube.com/playlist?list=PLmCYMN7HLjZ3sptw2DLvvOjXMUJKG_FIv" target="_blank">YouTube</a>
+            </div>
+            <p class="footer-tagline">Restoring the Psalms to the Worship of the Church</p>
+            <p class="copyright">© 2026 South Florida Psalter. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+        
+        // Psalm data - all 152 entries
+        const psalmsData = [
+            [1,"Psalm 1 New","3:04","Gxj7B-cyOXo"],[2,"Psalm 2 New","4:46","7HAQnp-DDek"],[3,"Psalm 3","3:58","YyknwMjH12o"],[4,"Psalm 4","4:04","qUREqVjJZCE"],[5,"Psalm 5","6:06","cIga-H1w7OA"],[6,"Psalm 6","3:41","HfcWa1ztp6Y"],[7,"Psalm 7","3:50","C5Z9qQtXYko"],[8,"Psalm 8","3:28","J1s83Gjce4c"],[9,"Psalm 9","4:26","ukDCXPMXPmo"],[10,"Psalm 10","5:25","F_7CIYmlA1A"],[11,"Psalm 11","3:13","QP0_Rq86vPI"],[12,"Psalm 12","3:13","SaejVj527SE"],[13,"Psalm 13","2:56","TTAlngbDqrM"],[14,"Psalm 14","3:07","7gfrY0hIDOM"],[15,"Psalm 15","3:20","KzXYP4Y2Xic"],[16,"Psalm 16 New","3:01","tfp3CB4V7iY"],[17,"Psalm 17 New","4:00","QMMAwKzHhzY"],[18,"Psalm 18 New","8:29","aGGNf_4YM8o"],[19,"Psalm 19","3:13","5v5FnVDRkXQ"],[20,"Psalm 20","2:02","Qi8QvKJlTQM"],[21,"Psalm 21","3:02","7OE4f3g9vz4"],[22,"Psalm 22 New","5:10","ej_4Trd1MrA"],[23,"Psalm 23","2:34","yLDqj_SBzPk"],[24,"Psalm 24","1:52","m6POkIiXLa0"],[25,"Psalm 25","3:59","N3V0baFdcjE"],[26,"Psalm 26","2:03","mzouM7AFd8M"],[27,"Psalm 27","4:10","bQPi9IF4Gq8"],[28,"Psalm 28","2:43","LkuCs4US1Dk"],[29,"Psalm 29","3:34","uzESJ52qzSc"],[30,"Psalm 30","3:20","PLwhZKWI0QM"],[31,"Psalm 31","6:31","6iVOPJeG_Bo"],[32,"Psalm 32","3:27","mxtvZYGlYzU"],[33,"Psalm 33","3:23","Z-KztMTU_jQ"],[34,"Psalm 34","3:55","5gpZn3TvQT8"],[35,"Psalm 35","4:50","NUNI31w_nwM"],[36,"Psalm 36","3:28","_1eyD3g6Yzw"],["37a","Psalm 37a","2:58","GsQkccU3nAA"],["37b","Psalm 37b","3:53","UKuQW5euQRI"],["37c","Psalm 37c","3:38","XBsSPsFW6eU"],[38,"Psalm 38","5:13","bZGGXlWKi4Q"],[39,"Psalm 39","4:01","Mc_FeVuk4tk"],[40,"Psalm 40","5:10","0FJCEMfWgT8"],[41,"Psalm 41","2:28","GM1KuG8NRZI"],[42,"Psalm 42","4:01","Ektwwe2kt8Q"],[43,"Psalm 43","1:56","Tyzh8ol-y_U"],[44,"Psalm 44","5:32","RqHlmr4Z9Ok"],[45,"Psalm 45","4:19","c_aJP6_KQ8o"],[46,"Psalm 46","2:47","MhF2Iak54eo"],[47,"Psalm 47","2:46","ZHJqqExWHJ4"],[48,"Psalm 48","3:24","-oV0etTr7go"],[49,"Psalm 49","3:34","BvNGZDntmpQ"],[50,"Psalm 50","4:21","tXYaas4I1I4"],[51,"Psalm 51","5:01","B7UgeQo0UNQ"],[52,"Psalm 52","2:09","byDv5VdtZzo"],[53,"Psalm 53","3:45","rhFCHcJl3HY"],[54,"Psalm 54","2:50","Ny6xh1KiAbA"],[55,"Psalm 55","5:18","1E8EX4nwdWg"],[56,"Psalm 56","3:14","yj-R2zoj8Rw"],[57,"Psalm 57","3:18","Ik3EpynzZ3M"],[58,"Psalm 58","2:17","a_bQanD429Q"],[59,"Psalm 59","4:04","eTbQC1Nu4n8"],[60,"Psalm 60","4:01","co1DgkELhwM"],[61,"Psalm 61","2:20","T437zj8mFYM"],[62,"Psalm 62","3:54","0VbdI1ggCl0"],[63,"Psalm 63","3:00","b4DV7_m48DQ"],[64,"Psalm 64","2:36","TZTjYlu_B5s"],[65,"Psalm 65","3:25","ipTaHkDZaHE"],[66,"Psalm 66","3:53","8X2OKVxXQ8M"],[67,"Psalm 67","2:04","iFU3cak-G84"],[68,"Psalm 68","6:43","1gHN6hQblNM"],[69,"Psalm 69","7:23","XsiQvYYgHCU"],[70,"Psalm 70","3:15","aJjp4muyeZc"],[71,"Psalm 71","4:17","CK6UnKqBBAA"],[72,"Psalm 72","5:30","XZFxcFW6T-s"],[73,"Psalm 73","4:07","kgPJxAdItAE"],[74,"Psalm 74","3:59","Tk3Z5iwuGsQ"],[75,"Psalm 75","3:28","FKF91YoiUps"],[76,"Psalm 76","3:00","CK90t0uRuvE"],[77,"Psalm 77","3:40","gOCSSrlYjLU"],[78,"Psalm 78","9:04","qLwiZNqfWg8"],[79,"Psalm 79","3:30","Q0a9Mv8IWxg"],[80,"Psalm 80","3:33","lhAF2bBYcfg"],[81,"Psalm 81","2:48","Utlab2n496o"],[82,"Psalm 82","3:23","NVUz30t6xYU"],[83,"Psalm 83","3:35","XzjVUGK91-E"],[84,"Psalm 84","3:12","VvRYA4C7JNo"],[85,"Psalm 85","3:40","hzWMQLPY1w0"],[86,"Psalm 86","3:52","_UdeYTesiRY"],[87,"Psalm 87","4:07","eE44i65l7Ac"],[88,"Psalm 88 New","4:55","4siemyqslx4"],[89,"Psalm 89","11:08","WvCNJ5rIZd4"],[90,"Psalm 90","7:32","Qn9z_0Cq3VU"],[91,"Psalm 91","5:06","0yJtc6axEJk"],[92,"Psalm 92","3:43","OdqiIRKXDbI"],[93,"Psalm 93","3:20","LGdlVekjuPI"],[94,"Psalm 94","4:47","EcZOI_bfe2c"],[95,"Psalm 95","4:58","fsVbAbb_6aQ"],[96,"Psalm 96","3:26","ViqH5SB7Hrc"],[97,"Psalm 97","4:50","YNC4Rhq-jwU"],[98,"Psalm 98","3:13","K97r0Tp8Kk8"],[99,"Psalm 99","4:24","5xrzR6EvtFI"],[100,"Psalm 100","4:15","emcVpiXi2uk"],[101,"Psalm 101","3:12","duIPQ_oxfQE"],[102,"Psalm 102","7:44","KivclalhaGo"],[103,"Psalm 103","3:53","nEMjCi36F2c"],[104,"Psalm 104","8:20","wjeiZL_bUEA"],[105,"Psalm 105","7:15","SYKOUvDw8mo"],[106,"Psalm 106","8:21","IPUsgG6FgDk"],[107,"Psalm 107","8:24","sbS1Zk4_WFQ"],[108,"Psalm 108","5:52","X2UpbhuoKoU"],[109,"Psalm 109","6:17","NiJ5K-921eE"],[110,"Psalm 110","3:36","Y-tBTmI5KVE"],[111,"Psalm 111","3:30","T730XuMHsbA"],[112,"Psalm 112","4:17","veFOJeG_-3w"],[113,"Psalm 113","2:46","wEn6cQSOGbk"],[114,"Psalm 114","2:29","FkiCrBOjvts"],[115,"Psalm 115","5:36","-FAWPuepvGs"],[116,"Psalm 116","5:30","7EGPvWK8w8k"],[117,"Psalm 117","2:58","3iIQXFowCgo"],[118,"Psalm 118","5:05","Xm1zaXfvGI4"],[119,"Psalm 119","31:31","IETxVBMV994"],[120,"Psalm 120","2:42","3ebzMZcgjGQ"],[121,"Psalm 121","3:50","UE7L34CZnQ0"],[122,"Psalm 122","3:35","PEz7uKWV4t4"],[123,"Psalm 123","2:49","eHS7saPu7Zc"],[124,"Psalm 124","4:10","kAzeO7Rbs6A"],[125,"Psalm 125","4:55","FMXkWnH2Kz8"],[126,"Psalm 126","3:39","18aAp2vVp44"],[127,"Psalm 127","3:16","608Ewkbkhxo"],[128,"Psalm 128","5:26","4XGYWEIiuo4"],[129,"Psalm 129","3:18","kwI5WTYZOQA"],[130,"Psalm 130","4:13","JHbsslNCsSw"],[131,"Psalm 131","1:47","qXg3ArCOxs8"],[132,"Psalm 132","3:41","zkmmeze6TM4"],[133,"Psalm 133","3:45","BvVZDcIxAqA"],[134,"Psalm 134","2:57","0bzaqFZTOVs"],[135,"Psalm 135","3:51","KVluTYJT3PI"],[136,"Psalm 136","3:52","gmgVwJBeJ4c"],[137,"Psalm 137","2:55","BU2zikdeLQ4"],[138,"Psalm 138","3:01","i8Z9qwKi0Z4"],[139,"Psalm 139","5:07","1lYeAvdsAYg"],[140,"Psalm 140","3:11","PKnBOkSdHII"],[141,"Psalm 141","4:04","V2HkcnUX82I"],[142,"Psalm 142","3:37","iiE_xQ2s6JE"],[143,"Psalm 143","4:37","1l709Oasqyk"],[144,"Psalm 144","3:25","S6HEpu3Ooe8"],[145,"Psalm 145","4:03","2ZF64Bbpuas"],[146,"Psalm 146","3:05","BunY18-Zm4s"],[147,"Psalm 147","3:45","NK9EasWI1Yc"],[148,"Psalm 148","3:45","OqBL5SSl-0A"],[149,"Psalm 149","2:45","jUM9qxVJY5I"],[150,"Psalm 150","2:38","Vj12478OHKE"]
+        ];
+        
+        const books = [
+            { name: "Book 1", range: "Psalms 1-41", start: 1, end: 41 },
+            { name: "Book 2", range: "Psalms 42-72", start: 42, end: 72 },
+            { name: "Book 3", range: "Psalms 73-89", start: 73, end: 89 },
+            { name: "Book 4", range: "Psalms 90-106", start: 90, end: 106 },
+            { name: "Book 5", range: "Psalms 107-150", start: 107, end: 150 }
+        ];
+        
+        function getPsalmNumber(numOrId) {
+            if (typeof numOrId === 'string') {
+                return parseInt(numOrId.match(/\d+/)[0]);
+            }
+            return numOrId;
+        }
+        
+        function renderPsalms(searchTerm = '') {
+            const container = document.getElementById('psalms-container');
+            const noResults = document.getElementById('no-results');
+            container.innerHTML = '';
+            
+            let hasResults = false;
+            
+            books.forEach(book => {
+                const bookPsalms = psalmsData.filter(psalm => {
+                    const psalmNum = getPsalmNumber(psalm[0]);
+                    return psalmNum >= book.start && psalmNum <= book.end;
+                });
+                
+                const filteredPsalms = bookPsalms.filter(psalm => {
+                    if (!searchTerm) return true;
+                    const psalmStr = psalm[0].toString().toLowerCase();
+                    const title = psalm[1].toLowerCase();
+                    const search = searchTerm.toLowerCase();
+                    return psalmStr.includes(search) || title.includes(search);
+                });
+                
+                if (filteredPsalms.length > 0) {
+                    hasResults = true;
+                    
+                    const bookSection = document.createElement('div');
+                    bookSection.className = 'book-section';
+                    
+                    const bookHeader = document.createElement('div');
+                    bookHeader.className = 'book-header';
+                    bookHeader.innerHTML = `
+                        <h2>${book.name}</h2>
+                        <p>${book.range}</p>
+                    `;
+                    bookSection.appendChild(bookHeader);
+                    
+                    const psalmList = document.createElement('div');
+                    psalmList.className = 'psalm-list';
+                    
+                    filteredPsalms.forEach(psalm => {
+                        const [num, title, duration, videoId] = psalm;
+                        const psalmItem = document.createElement('div');
+                        psalmItem.className = 'psalm-item';
+                        psalmItem.innerHTML = `
+                            <div class="psalm-info-text">
+                                <div class="psalm-title">${title}</div>
+                                <div class="psalm-duration">${duration}</div>
+                            </div>
+                            <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" class="play-button">▶ Play</a>
+                        `;
+                        psalmList.appendChild(psalmItem);
+                    });
+                    
+                    bookSection.appendChild(psalmList);
+                    container.appendChild(bookSection);
+                }
+            });
+            
+            noResults.style.display = hasResults ? 'none' : 'block';
+        }
+        
+        // Initialize
+        renderPsalms();
+        
+        // Search functionality
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            renderPsalms(e.target.value);
+        });
+    </script>
+</body>
+</html>

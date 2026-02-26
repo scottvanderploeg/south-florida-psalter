@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chord Charts - South Florida Psalter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --navy: #1a1a2e;
+            --gold: #d4a574;
+            --cream: #f5f0e8;
+            --burgundy: #6b2737;
+            --green: #2d4a3e;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: var(--navy);
+            background-color: var(--cream);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--navy);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav ul li a {
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 400;
+        }
+        
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+        
+        nav ul li a.active {
+            color: var(--gold);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--cream);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--green) 0%, var(--navy) 100%);
+            color: var(--cream);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Features Bar */
+        .features-bar {
+            background: var(--navy);
+            padding: 2rem;
+        }
+        
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+        
+        .feature-item {
+            color: var(--cream);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            color: var(--gold);
+        }
+        
+        .feature-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Filters */
+        .filters-section {
+            background: white;
+            padding: 2rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .filters-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .filter-group label {
+            font-weight: 600;
+            color: var(--navy);
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            padding: 0.5rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .filter-group input {
+            min-width: 250px;
+        }
+        
+        .filter-btn {
+            background: var(--navy);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        
+        .filter-btn:hover {
+            background: var(--burgundy);
+        }
+        
+        .review-link {
+            margin-left: auto;
+            background: var(--gold);
+            color: var(--navy);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        /* Charts Grid */
+        .charts-section {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            margin-bottom: 2rem;
+        }
+        
+        .section-title h2 {
+            font-size: 1.8rem;
+            color: var(--navy);
+        }
+        
+        .section-title p {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .chart-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .chart-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            border-color: var(--gold);
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+        }
+        
+        .key-badge {
+            background: var(--navy);
+            color: var(--gold);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .chart-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--navy);
+        }
+        
+        .chart-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .chart-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .chords-preview {
+            background: #f8f9fa;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        
+        .chart-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .chart-btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: var(--green);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1e352d;
+        }
+        
+        .btn-secondary {
+            background: #e9ecef;
+            color: var(--navy);
+        }
+        
+        .btn-secondary:hover {
+            background: #dee2e6;
+        }
+        
+        /* Dashboard Link */
+        .dashboard-section {
+            background: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .dashboard-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-section h2 {
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        
+        .dashboard-section p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .dashboard-btn {
+            display: inline-block;
+            background: var(--burgundy);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .dashboard-btn:hover {
+            background: #4a1b26;
+        }
+        
+        /* Coming Soon */
+        .coming-soon {
+            background: linear-gradient(135deg, var(--cream) 0%, white 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .coming-soon-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .coming-soon h2 {
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        
+        .coming-soon p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+        
+        .progress-fill {
+            background: var(--gold);
+            height: 100%;
+            width: 2%;
+            transition: width 0.3s;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--navy);
+            color: var(--cream);
+            padding: 3rem 2rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--cream);
+        }
+        
+        .footer-tagline {
+            font-style: italic;
+            color: var(--gold);
+            margin-top: 1rem;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(245, 240, 232, 0.7);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--navy);
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .review-link {
+                margin-left: 0;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">South Florida Psalter</a>
+            <button class="mobile-toggle" onclick="toggleMenu()">☰</button>
+            <ul id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="psalms.html">Psalms</a></li>
+                <li><a href="chord-charts.html" class="active">Chord Charts</a></li>
+                <li><a href="review/">Review</a></li>
+                <li><a href="vision.html">Vision</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>🎸 Chord Charts</h1>
+        <p>Downloadable chord charts for worship teams. Each chart includes chords, lyrics, and guitar voicings.</p>
+    </header>
+
+    <section class="features-bar">
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">🎼</div>
+                <div class="feature-title">Complete Chords</div>
+                <div class="feature-desc">All chords with diagrams</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📝</div>
+                <div class="feature-title">NIV 2011 Text</div>
+                <div class="feature-desc">Word-for-word lyrics</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎸</div>
+                <div class="feature-title">Guitar Voicings</div>
+                <div class="feature-desc">Recommended fingerings</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📱</div>
+                <div class="feature-title">Mobile Friendly</div>
+                <div class="feature-desc">Use on any device</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="filters-section">
+        <div class="filters-container">
+            <div class="filter-group">
+                <label for="search-input">Search:</label>
+                <input type="text" id="search-input" placeholder="Search psalm number or title...">
+            </div>
+            <div class="filter-group">
+                <label for="key-filter">Key:</label>
+                <select id="key-filter">
+                    <option value="all">All Keys</option>
+                    <option value="A">A</option>
+                    <option value="Bb">Bb</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="Db">Db</option>
+                    <option value="D">D</option>
+                    <option value="Eb">Eb</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="Gb">Gb</option>
+                    <option value="G">G</option>
+                    <option value="Ab">Ab</option>
+                </select>
+            </div>
+            <button class="filter-btn" onclick="applyFilters()">Filter</button>
+            <a href="review/" class="review-link">🔍 Review Pending Charts</a>
+        </div>
+    </section>
+
+    <section class="charts-section">
+        <div class="section-title">
+            <div>
+                <h2>Available Chord Charts</h2>
+                <p>Browse and download chord charts for your worship team</p>
+            </div>
+        </div>
+        
+        <div class="charts-grid" id="charts-grid">
+            <!-- Charts will be loaded dynamically -->
+        </div>
+        
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <div class="empty-state-icon">🎼</div>
+            <h3>No chord charts found</h3>
+            <p>Try adjusting your search or check back later as more charts are added.</p>
+        </div>
+    </section>
+
+    <section class="coming-soon">
+        <div class="coming-soon-content">
+            <h2>More Charts Coming Soon</h2>
+            <p>We're working on creating chord charts for all 150 Psalms. Currently 2 of 150 are available.</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p><strong>Want to help?</strong> Contact us to contribute chord charts for your favorite psalms.</p>
+        </div>
+    </section>
+
+    <section class="dashboard-section">
+        <div class="dashboard-container">
+            <h2>Worship Leader Dashboard</h2>
+            <p>Access the full dashboard for additional resources including multitracks, sheet music, and planning tools.</p>
+            <a href="https://clarkaddisonx222.github.io/clark-dashboard/" target="_blank" class="dashboard-btn">Open Dashboard</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="psalms.html">Psalms</a>
+                <a href="chord-charts.html">Chord Charts</a>
+                <a href="review/">Review</a>
+                <a href="https://www.youtube.com/playlist?list=PLmCYMN7HLjZ3sptw2DLvvOjXMUJKG_FIv" target="_blank">YouTube</a>
+            </div>
+            <p class="footer-tagline">Restoring the Psalms to the Worship of the Church</p>
+            <p class="copyright">© 2026 South Florida Psalter. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Chord charts data - will be populated from the actual files
+        const chordCharts = [
+            {
+                psalm: 3,
+                title: "You Are A Shield",
+                key: "B",
+                bpm: 143,
+                chords: ["B", "E", "G#m", "F#", "F#sus4", "Bsus2"],
+                file: "https://github.com/clarkaddisonx222/clark-dashboard/blob/main/worship-resources/chord-charts/Psalm-003-You-Are-A-Shield-B-Chord-Chart.md",
+                available: true
+            },
+            {
+                psalm: 23,
+                title: "The Lord Is My Shepherd",
+                key: "D",
+                bpm: 120,
+                chords: ["D", "G", "A", "Bm"],
+                file: null,
+                available: false
+            },
+            {
+                psalm: 1,
+                title: "Two Ways",
+                key: "G",
+                bpm: 128,
+                chords: ["G", "C", "D", "Em"],
+                file: null,
+                available: false
+            }
+        ];
+
+        let filteredCharts = [...chordCharts];
+
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        function renderCharts() {
+            const grid = document.getElementById('charts-grid');
+            const emptyState = document.getElementById('empty-state');
+            
+            if (filteredCharts.length === 0) {
+                grid.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            
+            grid.innerHTML = filteredCharts.map(chart => `
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <span class="chart-number">${chart.psalm}</span>
+                        <span class="key-badge">${chart.key}</span>
+                    </div>
+                    <h3 class="chart-title">${chart.title}</h3>
+                    <div class="chart-meta">
+                        <span>🎵 ${chart.bpm} BPM</span>
+                        <span>🎸 ${chart.chords.length} chords</span>
+                    </div>
+                    <div class="chords-preview">
+                        ${chart.chords.slice(0, 6).join(' • ')}
+                        ${chart.chords.length > 6 ? '...' : ''}
+                    </div>
+                    <div class="chart-actions">
+                        ${chart.available && chart.file 
+                            ? `<a href="${chart.file}" target="_blank" class="chart-btn btn-primary">View Chart</a>`
+                            : `<button class="chart-btn btn-primary" disabled style="opacity: 0.5;">Coming Soon</button>`
+                        }
+                        <a href="https://www.youtube.com/watch?v=${getVideoId(chart.psalm)}" target="_blank" class="chart-btn btn-secondary">▶ Video</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getVideoId(psalm) {
+            // This would map to actual video IDs from catalog.json
+            const videoMap = {
+                3: 'YyknwMjH12o',
+                23: 'yLDqj_SBzPk',
+                1: 'Gxj7B-cyOXo'
+            };
+            return videoMap[psalm] || '';
+        }
+
+        function applyFilters() {
+            const keyFilter = document.getElementById('key-filter').value;
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
+            
+            filteredCharts = chordCharts.filter(chart => {
+                const keyMatch = keyFilter === 'all' || chart.key === keyFilter;
+                const searchMatch = !searchInput || 
+                    chart.title.toLowerCase().includes(searchInput) ||
+                    chart.psalm.toString().includes(searchInput);
+                
+                return keyMatch && searchMatch;
+            });
+            
+            renderCharts();
+        }
+
+        function updateProgress() {
+            const available = chordCharts.filter(c => c.available).length;
+            const total = 150;
+            const percentage = (available / total) * 100;
+            document.getElementById('progress-fill').style.width = percentage + '%';
+        }
+
+        // Event listeners
+        document.getElementById('search-input').addEventListener('input', applyFilters);
+        document.getElementById('key-filter').addEventListener('change', applyFilters);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCharts();
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

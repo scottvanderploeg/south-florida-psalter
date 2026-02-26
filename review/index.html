@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chord Chart Review - South Florida Psalter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --navy: #1a1a2e;
+            --gold: #d4a574;
+            --cream: #f5f0e8;
+            --burgundy: #6b2737;
+            --green: #2d4a3e;
+            --amber: #f0ad4e;
+            --success: #5cb85c;
+            --info: #5bc0de;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: var(--navy);
+            background-color: var(--cream);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--navy);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav ul li a {
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 400;
+        }
+        
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--cream);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--burgundy) 0%, var(--navy) 100%);
+            color: var(--cream);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Stats Bar */
+        .stats-bar {
+            background: var(--navy);
+            padding: 1.5rem 2rem;
+            border-bottom: 3px solid var(--gold);
+        }
+        
+        .stats-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+        
+        .stat-item .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        
+        .stat-item .label {
+            font-size: 0.9rem;
+            color: var(--cream);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Filters */
+        .filters-section {
+            background: white;
+            padding: 2rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .filters-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .filter-group label {
+            font-weight: 600;
+            color: var(--navy);
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            padding: 0.5rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .filter-group input {
+            min-width: 250px;
+        }
+        
+        .filter-btn {
+            background: var(--navy);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        
+        .filter-btn:hover {
+            background: var(--burgundy);
+        }
+        
+        .filter-btn.active {
+            background: var(--gold);
+            color: var(--navy);
+        }
+        
+        /* Status Badges */
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-draft {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-review {
+            background: #cce5ff;
+            color: #004085;
+        }
+        
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-published {
+            background: var(--green);
+            color: white;
+        }
+        
+        /* Charts Table */
+        .charts-section {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title h2 {
+            font-size: 1.8rem;
+            color: var(--navy);
+        }
+        
+        .add-chart-btn {
+            background: var(--green);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .add-chart-btn:hover {
+            background: #1e352d;
+        }
+        
+        .charts-table {
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .charts-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .charts-table th {
+            background: var(--navy);
+            color: var(--cream);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .charts-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .charts-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .charts-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .chart-title {
+            font-weight: 600;
+            color: var(--navy);
+            font-size: 1.1rem;
+        }
+        
+        .chart-meta {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .key-badge {
+            background: var(--gold);
+            color: var(--navy);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .action-btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-view {
+            background: var(--info);
+            color: white;
+        }
+        
+        .btn-view:hover {
+            background: #31b0d5;
+        }
+        
+        .btn-edit {
+            background: var(--amber);
+            color: var(--navy);
+        }
+        
+        .btn-edit:hover {
+            background: #ec971f;
+        }
+        
+        .btn-approve {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-approve:hover {
+            background: #449d44;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Workflow Info */
+        .workflow-section {
+            background: white;
+            padding: 3rem 2rem;
+            margin-top: 2rem;
+        }
+        
+        .workflow-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .workflow-container h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--navy);
+        }
+        
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .workflow-step {
+            text-align: center;
+            padding: 2rem;
+            background: var(--cream);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .workflow-step:hover {
+            border-color: var(--gold);
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--navy);
+            color: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+        
+        .workflow-step h3 {
+            margin-bottom: 0.5rem;
+            color: var(--navy);
+        }
+        
+        .workflow-step p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--navy);
+            color: var(--cream);
+            padding: 3rem 2rem 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--cream);
+        }
+        
+        .footer-tagline {
+            font-style: italic;
+            color: var(--gold);
+            margin-top: 1rem;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(245, 240, 232, 0.7);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--navy);
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .charts-table {
+                font-size: 0.9rem;
+            }
+            
+            .charts-table th,
+            .charts-table td {
+                padding: 0.75rem 0.5rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .section-title {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .charts-table thead {
+                display: none;
+            }
+            
+            .charts-table tr {
+                display: block;
+                margin-bottom: 1rem;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+            }
+            
+            .charts-table td {
+                display: block;
+                text-align: right;
+                padding: 0.75rem;
+                position: relative;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .charts-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0.75rem;
+                font-weight: 600;
+                color: var(--navy);
+            }
+            
+            .charts-table td:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">South Florida Psalter</a>
+            <button class="mobile-toggle" onclick="toggleMenu()">☰</button>
+            <ul id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="psalms.html">Psalms</a></li>
+                <li><a href="chord-charts.html">Chord Charts</a></li>
+                <li><a href="review/">Review</a></li>
+                <li><a href="vision.html">Vision</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>🎵 Chord Chart Review</h1>
+        <p>Review, approve, and manage chord charts for the South Florida Psalter. Currently showing charts pending approval.</p>
+    </header>
+
+    <section class="stats-bar">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="number" id="stat-total">0</div>
+                <div class="label">Total Charts</div>
+            </div>
+            <div class="stat-item">
+                <div class="number" id="stat-draft">0</div>
+                <div class="label">Draft</div>
+            </div>
+            <div class="stat-item">
+                <div class="number" id="stat-review">0</div>
+                <div class="label">Under Review</div>
+            </div>
+            <div class="stat-item">
+                <div class="number" id="stat-approved">0</div>
+                <div class="label">Approved</div>
+            </div>
+            <div class="stat-item">
+                <div class="number" id="stat-published">0</div>
+                <div class="label">Published</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="filters-section">
+        <div class="filters-container">
+            <div class="filter-group">
+                <label for="status-filter">Status:</label>
+                <select id="status-filter">
+                    <option value="all">All Statuses</option>
+                    <option value="draft">Draft</option>
+                    <option value="review" selected>Under Review</option>
+                    <option value="approved">Approved</option>
+                    <option value="published">Published</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="key-filter">Key:</label>
+                <select id="key-filter">
+                    <option value="all">All Keys</option>
+                    <option value="A">A</option>
+                    <option value="Bb">Bb</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="Db">Db</option>
+                    <option value="D">D</option>
+                    <option value="Eb">Eb</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="Gb">Gb</option>
+                    <option value="G">G</option>
+                    <option value="Ab">Ab</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="search-input">Search:</label>
+                <input type="text" id="search-input" placeholder="Search psalm number or title...">
+            </div>
+            <button class="filter-btn active" onclick="applyFilters()">Apply Filters</button>
+            <button class="filter-btn" onclick="clearFilters()">Clear</button>
+        </div>
+    </section>
+
+    <section class="charts-section">
+        <div class="section-title">
+            <h2>Chord Charts</h2>
+            <a href="#" class="add-chart-btn" onclick="alert('Upload new chart functionality coming soon')">+ Upload New Chart</a>
+        </div>
+        
+        <div class="charts-table">
+            <table id="charts-table">
+                <thead>
+                    <tr>
+                        <th>Psalm</th>
+                        <th>Title</th>
+                        <th>Key</th>
+                        <th>Status</th>
+                        <th>Submitted</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="charts-tbody">
+                    <!-- Charts will be loaded dynamically -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <div class="empty-state-icon">🎼</div>
+            <h3>No chord charts found</h3>
+            <p>Try adjusting your filters or upload a new chart to get started.</p>
+        </div>
+    </section>
+
+    <section class="workflow-section">
+        <div class="workflow-container">
+            <h2>Review Workflow</h2>
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h3>Draft</h3>
+                    <p>Initial chord chart created and uploaded. Not yet ready for review.</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h3>Under Review</h3>
+                    <p>Chart is being reviewed for accuracy, formatting, and playability.</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h3>Approved</h3>
+                    <p>Chart has been approved and is ready to be published to the website.</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <h3>Published</h3>
+                    <p>Chart is live on the website and linked from the Psalm catalog.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="psalms.html">Psalms</a>
+                <a href="chord-charts.html">Chord Charts</a>
+                <a href="review/">Review</a>
+                <a href="https://www.youtube.com/playlist?list=PLmCYMN7HLjZ3sptw2DLvvOjXMUJKG_FIv" target="_blank">YouTube</a>
+            </div>
+            <p class="footer-tagline">Restoring the Psalms to the Worship of the Church</p>
+            <p class="copyright">© 2026 South Florida Psalter. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample chord charts data - in production, this would be loaded from a JSON file
+        const chordCharts = [
+            {
+                id: 1,
+                psalm: 3,
+                title: "You Are A Shield",
+                key: "B",
+                status: "review",
+                submitted: "2026-02-24",
+                author: "Selah Voss",
+                file: "Psalm-003-You-Are-A-Shield-B-Chord-Chart.md"
+            },
+            {
+                id: 2,
+                psalm: 1,
+                title: "Two Ways",
+                key: "G",
+                status: "draft",
+                submitted: "2026-02-25",
+                author: "Selah Voss",
+                file: null
+            },
+            {
+                id: 3,
+                psalm: 23,
+                title: "The Lord Is My Shepherd",
+                key: "D",
+                status: "approved",
+                submitted: "2026-02-20",
+                author: "Theo Voss",
+                file: null
+            }
+        ];
+
+        let filteredCharts = [...chordCharts];
+
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        function getStatusBadge(status) {
+            const statusMap = {
+                'draft': '<span class="status-badge status-draft">Draft</span>',
+                'review': '<span class="status-badge status-review">Under Review</span>',
+                'approved': '<span class="status-badge status-approved">Approved</span>',
+                'published': '<span class="status-badge status-published">Published</span>'
+            };
+            return statusMap[status] || status;
+        }
+
+        function renderCharts() {
+            const tbody = document.getElementById('charts-tbody');
+            const emptyState = document.getElementById('empty-state');
+            const table = document.querySelector('.charts-table');
+            
+            if (filteredCharts.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.style.display = 'block';
+                table.style.display = 'none';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            table.style.display = 'block';
+            
+            tbody.innerHTML = filteredCharts.map(chart => `
+                <tr>
+                    <td data-label="Psalm:"><span class="chart-title">Psalm ${chart.psalm}</span></td>
+                    <td data-label="Title:">
+                        <span class="chart-title">${chart.title}</span>
+                        <div class="chart-meta">by ${chart.author}</div>
+                    </td>
+                    <td data-label="Key:"><span class="key-badge">${chart.key}</span></td>
+                    <td data-label="Status:">${getStatusBadge(chart.status)}</td>
+                    <td data-label="Submitted:">${chart.submitted}</td>
+                    <td data-label="Actions:">
+                        <div class="actions">
+                            ${chart.file ? `<a href="../chord-charts/${chart.file}" class="action-btn btn-view" target="_blank">View</a>` : ''}
+                            <button class="action-btn btn-edit" onclick="editChart(${chart.id})">Edit</button>
+                            ${chart.status !== 'published' ? `<button class="action-btn btn-approve" onclick="approveChart(${chart.id})">${chart.status === 'approved' ? 'Publish' : 'Approve'}</button>` : ''}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateStats() {
+            const stats = {
+                total: chordCharts.length,
+                draft: chordCharts.filter(c => c.status === 'draft').length,
+                review: chordCharts.filter(c => c.status === 'review').length,
+                approved: chordCharts.filter(c => c.status === 'approved').length,
+                published: chordCharts.filter(c => c.status === 'published').length
+            };
+            
+            document.getElementById('stat-total').textContent = stats.total;
+            document.getElementById('stat-draft').textContent = stats.draft;
+            document.getElementById('stat-review').textContent = stats.review;
+            document.getElementById('stat-approved').textContent = stats.approved;
+            document.getElementById('stat-published').textContent = stats.published;
+        }
+
+        function applyFilters() {
+            const statusFilter = document.getElementById('status-filter').value;
+            const keyFilter = document.getElementById('key-filter').value;
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
+            
+            filteredCharts = chordCharts.filter(chart => {
+                const statusMatch = statusFilter === 'all' || chart.status === statusFilter;
+                const keyMatch = keyFilter === 'all' || chart.key === keyFilter;
+                const searchMatch = !searchInput || 
+                    chart.title.toLowerCase().includes(searchInput) ||
+                    chart.psalm.toString().includes(searchInput);
+                
+                return statusMatch && keyMatch && searchMatch;
+            });
+            
+            renderCharts();
+        }
+
+        function clearFilters() {
+            document.getElementById('status-filter').value = 'all';
+            document.getElementById('key-filter').value = 'all';
+            document.getElementById('search-input').value = '';
+            filteredCharts = [...chordCharts];
+            renderCharts();
+        }
+
+        function editChart(id) {
+            const chart = chordCharts.find(c => c.id === id);
+            alert(`Editing ${chart.title} (Psalm ${chart.psalm})\n\nFull edit functionality will open a form to modify chart details.`);
+        }
+
+        function approveChart(id) {
+            const chart = chordCharts.find(c => c.id === id);
+            const newStatus = chart.status === 'approved' ? 'published' : 'approved';
+            chart.status = newStatus;
+            
+            alert(`${chart.title} has been ${newStatus === 'published' ? 'published' : 'approved'}!`);
+            updateStats();
+            applyFilters();
+        }
+
+        // Event listeners for real-time filtering
+        document.getElementById('search-input').addEventListener('input', applyFilters);
+        document.getElementById('status-filter').addEventListener('change', applyFilters);
+        document.getElementById('key-filter').addEventListener('change', applyFilters);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStats();
+            applyFilters(); // Apply default filter (shows "Under Review")
+        });
+    </script>
+</body>
+</html>

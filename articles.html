@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles - South Florida Psalter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --navy: #1a1a2e;
+            --gold: #d4a574;
+            --cream: #f5f0e8;
+            --burgundy: #6b2737;
+            --green: #2d4a3e;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: var(--navy);
+            background-color: var(--cream);
+            line-height: 1.8;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--navy);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav ul li a {
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 400;
+        }
+        
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--cream);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--green) 0%, var(--navy) 100%);
+            color: var(--cream);
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            color: var(--cream);
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--gold);
+        }
+        
+        /* Article */
+        .article {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            background-color: white;
+        }
+        
+        .article-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--gold);
+        }
+        
+        .article-title {
+            font-size: 2.5rem;
+            color: var(--burgundy);
+            margin-bottom: 1rem;
+        }
+        
+        .article-subtitle {
+            font-size: 1.3rem;
+            color: var(--green);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .article-meta {
+            color: var(--navy);
+            opacity: 0.7;
+            font-size: 1rem;
+        }
+        
+        .article h2 {
+            font-size: 2rem;
+            color: var(--burgundy);
+            margin: 2.5rem 0 1rem;
+        }
+        
+        .article h3 {
+            font-size: 1.5rem;
+            color: var(--navy);
+            margin: 2rem 0 1rem;
+        }
+        
+        .article p {
+            margin-bottom: 1.5rem;
+            font-size: 1.15rem;
+            line-height: 1.9;
+        }
+        
+        .article em {
+            color: var(--burgundy);
+        }
+        
+        .article strong {
+            color: var(--navy);
+        }
+        
+        /* Pull Quotes */
+        .pull-quote {
+            background: linear-gradient(135deg, var(--burgundy) 0%, var(--navy) 100%);
+            color: var(--cream);
+            padding: 2rem;
+            margin: 2.5rem 0;
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+        
+        /* Author Bio */
+        .author-bio {
+            background-color: var(--cream);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 3rem;
+            border-left: 5px solid var(--gold);
+        }
+        
+        .author-bio p {
+            font-size: 1rem;
+            font-style: italic;
+            margin-bottom: 0;
+        }
+        
+        /* More Articles */
+        .more-articles {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .more-articles h2 {
+            font-size: 2rem;
+            color: var(--burgundy);
+            margin-bottom: 2rem;
+        }
+        
+        .more-articles p {
+            font-size: 1.2rem;
+            color: var(--navy);
+            opacity: 0.7;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--navy);
+            color: var(--cream);
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--cream);
+        }
+        
+        .footer-tagline {
+            font-style: italic;
+            color: var(--gold);
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(245, 240, 232, 0.7);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--navy);
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .article {
+                padding: 2rem 1.5rem;
+            }
+            
+            .article-title {
+                font-size: 2rem;
+            }
+            
+            .article h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">South Florida Psalter</a>
+            <button class="mobile-toggle" onclick="toggleMenu()">☰</button>
+            <ul id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="psalms.html">Psalms</a></li>
+                <li><a href="vision.html">Vision</a></li>
+                <li><a href="articles.html">Articles</a></li>
+                <li><a href="for-churches.html">For Churches</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>Articles & Research</h1>
+        <p>Exploring the theology and practice of psalm-singing</p>
+    </div>
+
+    <article class="article">
+        <div class="article-header">
+            <h1 class="article-title">Why Sing the Psalms?</h1>
+            <p class="article-subtitle">A Case for Returning Scripture to Worship</p>
+            <p class="article-meta">By Elise Hartwell</p>
+        </div>
+
+        <p>Walk into most evangelical churches on a Sunday morning, and you'll hear skillfully produced worship songs—contemporary melodies with moving lyrics about God's love, grace, and power. The music is often beautiful, the production excellent, the hearts sincere. Yet something profound is missing.</p>
+
+        <p>The words being sung are almost entirely human compositions. Meanwhile, the 150 songs God himself gave us—the Psalms—sit silent in the back of our Bibles, read occasionally but rarely sung.</p>
+
+        <p>What would happen if the church rediscovered these ancient songs? What if we returned to singing the very words that Jesus sang, that sustained the early church through persecution, that fueled the Reformation, and that have echoed through twenty centuries of Christian worship?</p>
+
+        <h2>The Biblical Foundation: More Than a Suggestion</h2>
+
+        <p>The case for singing Psalms isn't merely traditional or preferential—it's biblical. When the Apostle Paul instructs the church about their gathered worship, he writes: "Let the word of Christ dwell in you richly, teaching and admonishing one another in all wisdom, singing psalms and hymns and spiritual songs, with thankfulness in your hearts to God" (Colossians 3:16).</p>
+
+        <p>Notice the order: <em>psalms first</em>. This wasn't accidental. Paul echoes this in Ephesians 5:19, calling believers to address "one another in psalms and hymns and spiritual songs, singing and making melody to the Lord with your heart." James adds his voice: "Is anyone cheerful? Let him sing praise" (James 5:13)—and the early church would have understood "praise" primarily as the Psalms, the praise book of Scripture.</p>
+
+        <p>These aren't peripheral suggestions but central commands for the life of the church. Singing is how the word of Christ dwells in us richly. It's how we teach and admonish one another. The Psalms are uniquely designed for this purpose—they are Scripture set to song, theology wrapped in poetry, truth that lodges deep in the memory and heart.</p>
+
+        <h2>The Church's Ancient Practice</h2>
+
+        <p>For the first 1,500 years of Christian worship, psalm-singing wasn't optional—it was central. The early church inherited the Psalter from their Jewish roots. Jesus himself sang the Psalms (we know he sang the Hallel psalms at the Last Supper). The apostles quoted Psalms constantly in their preaching and writing.</p>
+
+        <p>Church fathers like Athanasius, Basil, and Augustine wrote extensively about the Psalms as the church's songbook. Augustine called the Psalms "the voice of the whole church," noting their unique ability to give expression to every human emotion—joy and sorrow, confidence and doubt, praise and lament—all directed toward God.</p>
+
+        <p>In the medieval monasteries, the entire Psalter was sung every week in the daily offices. Monks memorized all 150 psalms, praying them in rhythm with the rising and setting sun. The Psalms formed the backbone of Christian worship across continents and centuries.</p>
+
+        <h2>The Reformation Recovery</h2>
+
+        <p>The Protestant Reformation brought renewed emphasis on Scripture, and this included recovering congregational psalm-singing. The Reformers recognized that if worship was to be reformed according to Scripture, the people needed to sing Scripture itself.</p>
+
+        <p>Martin Luther produced metrical psalms in German. John Calvin made psalm-singing central to Reformed worship in Geneva, commissioning the Genevan Psalter that put all 150 psalms into French verse. The Scottish Psalter became the dominant songbook of Presbyterian worship for centuries.</p>
+
+        <div class="pull-quote">
+            These weren't dusty academic exercises—they were songs of revolution and renewal.
+        </div>
+
+        <p>Protestant martyrs sang Psalms as they went to the stake. Huguenots sang them in the streets of Paris. Scottish Covenanters sang them on windswept hillsides. The Psalms sustained the church through persecution, gave voice to their deepest longings, and united congregations around the pure word of God.</p>
+
+        <h2>The Modern Decline</h2>
+
+        <p>Somewhere in the 20th century, Western evangelicalism largely lost the practice of congregational psalm-singing. Various factors contributed: the rise of the gospel song movement, the influence of popular music styles, the explosive growth of contemporary Christian music as an industry, and perhaps a subtle drift toward valuing novelty over rootedness.</p>
+
+        <p>Today's worship repertoire is overwhelmingly dominated by songs written in the last 20 years. While many contemporary worship songs contain biblical themes and truths, they are ultimately human reflections on Scripture rather than Scripture itself. We've become more comfortable singing our own words about God than singing God's words back to him.</p>
+
+        <p>The irony is stark: we claim to be "Bible-believing" churches, yet in the most formative spiritual practice—corporate worship—we've largely abandoned the Bible's own songbook.</p>
+
+        <h2>The Cost of Forgetting</h2>
+
+        <p>What have we lost in this shift? Several things:</p>
+
+        <p><strong>Theological breadth.</strong> The Psalms cover the full spectrum of biblical theology—creation, sin, redemption, judgment, covenant, kingship, wisdom, prophecy, and eschatology. They give us a comprehensive biblical worldview in song.</p>
+
+        <p><strong>Emotional honesty.</strong> The Psalms don't shy away from difficulty. They include laments, complaints, confessions, and raw cries for help alongside exuberant praise. They teach us to bring our whole selves—including our doubts and struggles—before God.</p>
+
+        <p><strong>Scriptural formation.</strong> When we sing the Psalms, we memorize Scripture. Children who grow up singing Psalm 23 have it in their bones for life. The words return in times of crisis, comfort in grief, and steady the soul in chaos.</p>
+
+        <p><strong>Christological depth.</strong> The Psalms are shot through with prophecies and types of Christ. Singing them connects us to the whole redemptive story, from creation's design to Christ's fulfillment to the new creation's promise.</p>
+
+        <p><strong>Intergenerational continuity.</strong> When we sing the Psalms, we sing the same songs Jesus sang, the same songs our spiritual ancestors sang for two millennia. We join the great cloud of witnesses, our voices blending across time and space.</p>
+
+        <h2>A Movement Stirring</h2>
+
+        <p>The good news is that something is stirring in the church today. Across denominational lines, worship leaders, pastors, and musicians are rediscovering the Psalms and asking: "What if we sang these again?"</p>
+
+        <p>New psalm-singing projects are emerging—modern settings that honor the text while making it accessible to contemporary congregations. Churches are slowly reintroducing psalms into their worship rotation. Families are singing them at dinner tables. Small groups are chanting them in prayer.</p>
+
+        <p>This isn't nostalgia or traditionalism for its own sake. It's a hunger for rootedness, for biblical substance, for songs that connect us to the whole church across history. It's a recognition that we need more than our own words—we need God's words dwelling in us richly.</p>
+
+        <h2>A Vision for Renewal</h2>
+
+        <p>Imagine a church where the Psalms are sung weekly—where children grow up with Psalm 100 and Psalm 46 on their lips, where teenagers facing anxiety find words in Psalm 23 and Psalm 27, where adults walking through suffering discover the laments of Psalm 13 and Psalm 88 give voice to their pain.</p>
+
+        <p>Imagine worship services where the joy of Psalm 150 erupts in celebration, where the confession of Psalm 51 leads to genuine repentance, where the instruction of Psalm 1 shapes how we think about life and godliness.</p>
+
+        <p>Imagine a generation of believers so saturated in the Psalms that biblical categories shape their thinking, biblical language flows naturally in prayer, and biblical hope anchors them through cultural storms.</p>
+
+        <p>This isn't fantasy—it's recovery. It's what the church has done for most of its history. And it's within reach again.</p>
+
+        <h2>Joining the Movement</h2>
+
+        <p>The South Florida Psalter is one small effort in this larger movement. It's a project rooted in the belief that local churches can and should return to singing the words God gave us. Not to the exclusion of other music, but as a central, nourishing, formative practice.</p>
+
+        <p>The vision is simple: to create faithful, beautiful, singable settings of the Psalms that can be used in corporate worship, family devotions, and personal prayer. To help a new generation discover these ancient songs. To participate in the Spirit's work of letting the word of Christ dwell richly in the church.</p>
+
+        <h2>The Invitation</h2>
+
+        <p>You don't need permission to start singing the Psalms. You don't need a committee decision or a denominational mandate. You can begin today.</p>
+
+        <p>Start with one psalm. Learn it. Sing it. Let the words wash over you. Notice what they do in your heart, how they shape your prayers, how they reorient your vision of God and yourself.</p>
+
+        <p>Teach them to your children. Introduce them to your small group. Suggest them to your worship leader. Slowly, patiently, let the Psalter become part of your spiritual vocabulary again.</p>
+
+        <div class="pull-quote">
+            The Psalms have sustained God's people for three thousand years. They're still here, still living and active, still able to form us into the image of Christ.
+        </div>
+
+        <p>The invitation stands: Come, let us sing to the Lord. Let us make a joyful noise to the rock of our salvation. Let us come into his presence with thanksgiving and extol him with music and song.</p>
+
+        <p>The Psalms are waiting. Let's return them to our worship, and in doing so, let's return ourselves to the word of God.</p>
+
+        <div class="author-bio">
+            <p>Elise Hartwell is a content writer and researcher for the South Florida Psalter, an initiative to restore congregational psalm-singing in local church worship. She lives in South Florida where she studies the history of worship and the contemporary renewal of biblical song.</p>
+        </div>
+    </article>
+
+    <div class="more-articles">
+        <h2>More Articles Coming Soon</h2>
+        <p>We're continually exploring the theology, history, and practice of psalm-singing.<br>Check back for new content.</p>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://www.youtube.com/playlist?list=PLmCYMN7HLjZ3sptw2DLvvOjXMUJKG_FIv" target="_blank">YouTube Playlist</a>
+                <a href="https://pray150.com" target="_blank">Pray150.com</a>
+                <a href="for-churches.html">Contact</a>
+            </div>
+            <p class="footer-tagline">Restoring the Psalms to the Worship of the Church</p>
+            <p class="copyright">© 2026 South Florida Psalter. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
