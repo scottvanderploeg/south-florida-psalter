@@ -3,538 +3,802 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>South Florida Psalter - Restoring the Psalms to the Worship of the Church</title>
+    <title>South Florida Psalter | Restore the Psalms to Worship</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         :root {
-            --navy: #1a1a2e;
-            --gold: #d4a574;
-            --cream: #f5f0e8;
-            --burgundy: #6b2737;
-            --green: #2d4a3e;
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --cream: #f5e6c8;
+            --cream-light: #faf3e0;
+            --blue: #58a6ff;
+            --blue-light: #79c0ff;
+            --text-primary: #f0f6fc;
+            --text-secondary: #c9d1d9;
+            --text-muted: #8b949e;
+            --border: #30363d;
+            --accent: #d4a574;
+            --accent-light: #e8c9a0;
         }
-        
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Source Sans Pro', sans-serif;
-            color: var(--navy);
-            background-color: var(--cream);
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
         }
-        
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
         }
-        
-        /* Navigation */
-        nav {
-            background-color: var(--navy);
-            padding: 1rem 0;
-            position: sticky;
+
+        /* Header */
+        .header {
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
         }
-        
-        nav .container {
-            max-width: 1200px;
+
+        .header-content {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
-        nav .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--gold);
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             text-decoration: none;
+        }
+
+        .logo img {
+            height: 45px;
+            width: auto;
+        }
+
+        .logo-text {
+            color: var(--cream);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
             font-weight: 700;
         }
-        
-        nav ul {
+
+        .nav-desktop {
             display: flex;
-            list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
+            align-items: center;
         }
-        
-        nav ul li a {
-            color: var(--cream);
+
+        .nav-desktop a {
+            color: var(--text-secondary);
             text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
             transition: color 0.3s;
-            font-weight: 400;
         }
-        
-        nav ul li a:hover {
-            color: var(--gold);
+
+        .nav-desktop a:hover {
+            color: var(--cream);
         }
-        
-        .mobile-toggle {
+
+        .nav-desktop a.cta-link {
+            background: var(--cream);
+            color: var(--bg-primary);
+            padding: 0.6rem 1.4rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .nav-desktop a.cta-link:hover {
+            background: var(--accent);
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
             display: none;
             background: none;
             border: none;
-            color: var(--cream);
+            color: var(--text-primary);
             font-size: 1.5rem;
             cursor: pointer;
         }
-        
+
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--burgundy) 100%);
-            color: var(--cream);
-            text-align: center;
-            padding: 8rem 2rem 6rem;
+            min-height: 100vh;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 2rem 6rem;
             overflow: hidden;
         }
-        
-        .hero::before {
-            content: '';
+
+        .hero-slideshow {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(212, 165, 116, 0.1) 0%, transparent 50%);
+            z-index: 0;
         }
-        
+
+        .hero-slideshow .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .hero-slideshow .slide.active { opacity: 1; }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(13, 17, 23, 0.92) 0%, rgba(22, 27, 34, 0.88) 50%, rgba(13, 17, 23, 0.95) 100%);
+            z-index: 1;
+        }
+
         .hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            color: var(--cream);
             animation: fadeInUp 1s ease;
         }
-        
-        .hero .tagline {
-            font-size: 1.5rem;
-            color: var(--gold);
-            margin-bottom: 2rem;
-            font-weight: 300;
-            animation: fadeInUp 1s ease 0.2s both;
+
+        .hero-logo {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
-        
-        .hero .cta-button {
+
+        .hero-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-badge {
             display: inline-block;
-            background-color: var(--gold);
-            color: var(--navy);
-            padding: 1rem 3rem;
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: 600;
+            background: rgba(88, 166, 255, 0.15);
+            border: 1px solid var(--blue);
+            color: var(--blue-light);
+            padding: 0.6rem 1.5rem;
             border-radius: 50px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: fadeInUp 1s ease 0.4s both;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
         }
-        
-        .hero .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212, 165, 116, 0.3);
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--cream);
         }
-        
+
+        .hero h1 em {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--cream);
+            color: var(--bg-primary);
+            padding: 1.1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+            border: 2px solid var(--cream);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--cream);
+            padding: 1.1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            border: 2px solid var(--cream);
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--cream);
+            color: var(--bg-primary);
+        }
+
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* Sections */
-        section {
-            padding: 5rem 2rem;
-        }
-        
+
+        /* Section */
+        section { padding: 6rem 2rem; }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            color: var(--blue);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
         section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            color: var(--navy);
-        }
-        
-        /* About Section */
-        .about {
-            background-color: white;
-        }
-        
-        .about p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-            text-align: center;
-            color: var(--navy);
-            line-height: 1.8;
-        }
-        
-        /* Stats Bar */
-        .stats {
-            background: linear-gradient(135deg, var(--green) 0%, var(--navy) 100%);
+            font-size: clamp(2rem, 4vw, 3rem);
             color: var(--cream);
-            padding: 3rem 2rem;
+            margin-bottom: 1rem;
         }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 700px;
             margin: 0 auto;
         }
-        
-        .stat-item {
-            text-align: center;
+
+        /* Why Psalms Section */
+        .why-psalms { background: var(--bg-secondary); }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
         }
-        
-        .stat-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--gold);
-            margin-bottom: 0.5rem;
+
+        .why-text h3 {
+            font-size: 2rem;
+            color: var(--cream);
+            margin-bottom: 1.5rem;
+        }
+
+        .why-text p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .why-text p:first-child::first-letter {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            float: left;
+            line-height: 1;
+            padding-right: 0.75rem;
+            color: var(--accent);
+        }
+
+        .why-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-box {
+            background: var(--bg-tertiary);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-box .number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            color: var(--accent);
             font-weight: 700;
         }
-        
-        .stat-label {
-            font-size: 1rem;
-            color: var(--cream);
-            font-weight: 300;
+
+        .stat-box .label {
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
-        
-        /* Why Psalms Preview */
-        .why-psalms {
-            background-color: var(--cream);
-        }
-        
-        .why-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        
-        .why-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-        
-        .read-more {
-            display: inline-block;
-            color: var(--burgundy);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border-bottom: 2px solid var(--burgundy);
-            transition: color 0.3s, border-color 0.3s;
-        }
-        
-        .read-more:hover {
-            color: var(--gold);
-            border-color: var(--gold);
-        }
-        
-        /* Featured Psalms */
-        .featured-psalms {
-            background-color: white;
-        }
-        
-        .psalms-grid {
+
+        /* Resources Section */
+        .resources { background: var(--bg-primary); }
+
+        .resources-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
-        
-        .psalm-card {
-            background-color: var(--cream);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+
+        .resource-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.3s;
         }
-        
-        .psalm-card:hover {
+
+        .resource-card:hover {
+            border-color: var(--cream);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
-        
+
+        .resource-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .resource-card h3 {
+            color: var(--cream);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .resource-card p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .resource-link {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .resource-link:hover {
+            color: var(--blue-light);
+        }
+
+        /* Featured Psalms */
+        .featured-psalms { background: var(--bg-secondary); }
+
+        .psalms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .psalm-card {
+            background: var(--bg-tertiary);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .psalm-card:hover {
+            border-color: var(--cream);
+        }
+
         .psalm-card .video-container {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
         }
-        
-        .psalm-card .video-container iframe {
+
+        .psalm-card iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            border: none;
         }
-        
+
         .psalm-card .psalm-info {
             padding: 1.5rem;
-            text-align: center;
         }
-        
+
         .psalm-card h3 {
-            font-size: 1.5rem;
-            color: var(--burgundy);
+            color: var(--cream);
+            font-size: 1.4rem;
             margin-bottom: 0.5rem;
         }
-        
-        /* For Churches CTA */
-        .for-churches-cta {
-            background: linear-gradient(135deg, var(--burgundy) 0%, var(--navy) 100%);
+
+        .psalm-card p {
+            color: var(--text-muted);
+        }
+
+        /* Theses Section */
+        .theses { background: var(--bg-primary); position: relative; }
+
+        .theses::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cream), transparent);
+        }
+
+        .theses-preview {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .theses-preview blockquote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
             color: var(--cream);
             text-align: center;
-            padding: 5rem 2rem;
-        }
-        
-        .for-churches-cta h2 {
-            color: var(--cream);
             margin-bottom: 1.5rem;
+            line-height: 1.5;
         }
-        
-        .for-churches-cta p {
-            font-size: 1.3rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            line-height: 1.8;
-        }
-        
-        .for-churches-cta .cta-button {
-            background-color: var(--gold);
-            color: var(--navy);
-            padding: 1rem 3rem;
-            text-decoration: none;
-            font-size: 1.2rem;
+
+        .theses-preview cite {
+            display: block;
+            text-align: center;
+            color: var(--accent);
+            font-style: normal;
             font-weight: 600;
-            border-radius: 50px;
-            display: inline-block;
-            transition: transform 0.3s, box-shadow 0.3s;
         }
-        
-        .for-churches-cta .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212, 165, 116, 0.3);
+
+        .theses-cta {
+            text-align: center;
+            margin-top: 2rem;
         }
-        
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            text-align: center;
+        }
+
+        .newsletter h2 { color: var(--cream); margin-bottom: 1rem; }
+        .newsletter p { color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            max-width: 500px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem 1.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .newsletter-form input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--cream);
+        }
+
+        .newsletter-form button {
+            padding: 1rem 2.5rem;
+            background: var(--cream);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--accent);
+        }
+
         /* Footer */
-        footer {
-            background-color: var(--navy);
-            color: var(--cream);
-            padding: 3rem 2rem 2rem;
-        }
-        
+        footer { background: var(--bg-primary); border-top: 1px solid var(--border); padding: 4rem 2rem 2rem; }
+
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
             text-align: center;
         }
-        
-        .footer-links {
+
+        .footer-logo {
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 2rem;
+            gap: 1rem;
             margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        .footer-links a {
-            color: var(--gold);
             text-decoration: none;
-            transition: color 0.3s;
         }
-        
-        .footer-links a:hover {
-            color: var(--cream);
-        }
-        
+
+        .footer-logo img { height: 60px; }
+        .footer-logo span { color: var(--cream); font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; }
+
         .footer-tagline {
             font-style: italic;
-            color: var(--gold);
-            margin-top: 1rem;
-            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
         }
-        
-        .copyright {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            color: rgba(245, 240, 232, 0.7);
-        }
-        
+
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--cream); }
+
+        .copyright { color: var(--text-muted); font-size: 0.9rem; }
+
         /* Responsive */
         @media (max-width: 768px) {
-            nav ul {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background-color: var(--navy);
-                padding: 1rem;
-                gap: 1rem;
-            }
-            
-            nav ul.active {
-                display: flex;
-            }
-            
-            .mobile-toggle {
-                display: block;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero .tagline {
-                font-size: 1.2rem;
-            }
-            
-            section h2 {
-                font-size: 2rem;
-            }
-            
-            .psalms-grid {
-                grid-template-columns: 1fr;
-            }
+            .nav-desktop { display: none; }
+            .menu-toggle { display: block; }
+            .hero-logo { width: 150px; height: 150px; }
+            .hero-cta { flex-direction: column; }
+            .btn-primary, .btn-secondary { width: 100%; max-width: 300px; margin: 0 auto; }
+            .why-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .why-stats { grid-template-columns: 1fr; }
+            .theses-preview { padding: 2rem 1.5rem; }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <a href="index.html" class="logo">South Florida Psalter</a>
-            <button class="mobile-toggle" onclick="toggleMenu()">☰</button>
-            <ul id="nav-menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="psalms.html">Psalms</a></li>
-                <li><a href="chord-charts.html">Chord Charts</a></li>
-                <li><a href="review/">Review</a></li>
-                <li><a href="vision.html">Vision</a></li>
-            </ul>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <img src="assets/logo-light.jpg" alt="South Florida Psalter">
+                <span class="logo-text">South Florida Psalter</span>
+            </a>
+            
+            <nav class="nav-desktop">
+                <a href="#about">About</a>
+                <a href="#resources">Resources</a>
+                <a href="#psalms">Psalms</a>
+                <a href="blog.html">Blog</a>
+                <a href="#theses">95 Theses</a>
+                <a href="#contact" class="cta-link">Get Started</a>
+            </nav>
+            
+            <button class="menu-toggle">☰</button>
         </div>
-    </nav>
+    </header>
 
+    <!-- Hero with Slideshow -->
     <section class="hero">
+        <div class="hero-slideshow" id="heroSlideshow">
+            <div class="slide active" style="background-image: url('assets/worship-1.jpg')"></div>
+            <div class="slide" style="background-image: url('assets/worship-2.jpg')"></div>
+            <div class="slide" style="background-image: url('assets/worship-3.jpg')"></div>
+            <div class="slide" style="background-image: url('assets/worship-4.jpg')"></div>
+            <div class="slide" style="background-image: url('assets/worship-5.jpg')"></div>
+            <div class="slide" style="background-image: url('assets/worship-6.jpg')"></div>
+            <div class="slide" style="background-image: url('assets/worship-7.jpg')"></div>
+            <div class="slide" style="background-image: url('assets/worship-8.jpg')"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        
         <div class="hero-content">
-            <h1>The South Florida Psalter</h1>
-            <p class="tagline">Restoring the Psalms to the Worship of the Church</p>
-            <a href="https://www.youtube.com/playlist?list=PLmCYMN7HLjZ3sptw2DLvvOjXMUJKG_FIv" target="_blank" class="cta-button">▶ Listen to the Psalms</a>
-        </div>
-    </section>
-
-    <section class="about">
-        <div class="container">
-            <h2>About the Project</h2>
-            <p>
-                The South Florida Psalter is a comprehensive musical setting of all 150 Psalms, 
-                using the word-for-word text of the NIV 2011 translation. Each psalm has been 
-                set to original music, creating a complete songbook for the church to sing 
-                God's own words back to Him.
+            <div class="hero-logo">
+                <img src="assets/logo-dark.jpg" alt="South Florida Psalter">
+            </div>
+            
+            <div class="hero-badge">150 Psalms • NIV 2011 • Word for Word</div>
+            
+            <h1>
+                Restore the Psalms<br>
+                <em>to the Worship</em><br>
+                of the Church
+            </h1>
+            
+            <p class="hero-subtitle">
+                The Psalms are God's own songbook—given to His people to sing His Word back to Him. 
+                Join the movement to rediscover the power of singing the Psalms corporately.
             </p>
-        </div>
-    </section>
-
-    <section class="stats">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-number">150</div>
-                <div class="stat-label">Psalms</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">10h 44m</div>
-                <div class="stat-label">of Music</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">NIV 2011</div>
-                <div class="stat-label">Text</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">All Original</div>
-                <div class="stat-label">Compositions</div>
+            
+            <div class="hero-cta">
+                <a href="https://www.youtube.com/playlist?list=PLmCYMN7HLjZ3sptw2DLvvOjXMUJKG_FIv" target="_blank" class="btn-primary">▶ Listen to the Psalms</a>
+                <a href="#resources" class="btn-secondary">Get Resources</a>
             </div>
         </div>
     </section>
 
-    <section class="why-psalms">
+    <!-- Why the Psalms Section -->
+    <section class="why-psalms" id="about">
         <div class="container">
-            <h2>Why the Psalms?</h2>
-            <div class="why-content">
-                <p>
-                    For centuries, the Psalms were the songbook of the church. They shaped worship, 
-                    formed faith, and gave voice to every human emotion before God. Yet today, 
-                    most Christians have never sung a single psalm.
-                </p>
-                <p>
-                    The church has forgotten its own songbook — and in doing so, has lost something 
-                    irreplaceable. The Psalms teach us how to pray, how to lament, how to rejoice, 
-                    and how to see Christ in all of Scripture.
-                </p>
-                <a href="articles.html" class="read-more">Read the Full Article →</a>
+            <div class="why-grid">
+                <div class="why-text">
+                    <span class="section-label">Why the Psalms Matter</span>
+                    <h2>The Church Has Forgotten Its Songbook</h2>
+                    <p>
+                        For centuries, the Psalms were the songbook of the church. They shaped worship, 
+                        formed faith, and gave voice to every human emotion before God. Yet today, 
+                        most Christians have never sung a single psalm.
+                    </p>
+                    <p>
+                        The Psalms teach us how to pray, how to lament, how to rejoice, 
+                        and how to see Christ in all of Scripture. They are God's own words—
+                        given to us to sing back to Him.
+                    </p>
+                </div>
+                
+                <div class="why-stats">
+                    <div class="stat-box">
+                        <div class="number">150</div>
+                        <div class="label">Complete Psalms</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">10h+</div>
+                        <div class="label">of Music</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">NIV</div>
+                        <div class="label">Word for Word</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">100%</div>
+                        <div class="label">Original Music</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="featured-psalms">
+    <!-- Resources Section -->
+    <section class="resources" id="resources">
         <div class="container">
-            <h2>Featured Psalms</h2>
+            <div class="section-header">
+                <span class="section-label">Worship Resources</span>
+                <h2>Everything Your Church Needs</h2>
+                <p class="section-subtitle">
+                    Professional resources designed to help your congregation sing the Psalms together.
+                </p>
+            </div>
+            
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">🎸</div>
+                    <h3>Chord Charts</h3>
+                    <p>Lead sheets with chords and lyrics. PraiseCharts quality, precise alignment.</p>
+                    <a href="#" class="resource-link">Browse Chords →</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">🎵</div>
+                    <h3>Multitracks</h3>
+                    <p>Full band stems for custom mixes. Keys, drums, bass, guitars, and more.</p>
+                    <a href="#" class="resource-link">Get Multitracks →</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">🎼</div>
+                    <h3>Lead Sheets</h3>
+                    <p>Melody line with chords and lyrics. Perfect for instrumentalists and vocalists.</p>
+                    <a href="#" class="resource-link">View Lead Sheets →</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">📺</div>
+                    <h3>Lyric Videos</h3>
+                    <p>High-quality lyric videos for projections. Ready for your worship service.</p>
+                    <a href="#" class="resource-link">Watch Videos →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Psalms -->
+    <section class="featured-psalms" id="psalms">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Featured Psalms</span>
+                <h2>Listen & Sing Along</h2>
+                <p class="section-subtitle">A preview of the complete South Florida Psalter collection.</p>
+            </div>
+            
             <div class="psalms-grid">
                 <div class="psalm-card">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/yLDqj_SBzPk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/yLDqj_SBzPk" allowfullscreen></iframe>
                     </div>
                     <div class="psalm-info">
                         <h3>Psalm 23</h3>
                         <p>"The LORD is my shepherd"</p>
                     </div>
                 </div>
+                
                 <div class="psalm-card">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/MhF2Iak54eo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/MhF2Iak54eo" allowfullscreen></iframe>
                     </div>
                     <div class="psalm-info">
                         <h3>Psalm 46</h3>
                         <p>"God is our refuge and strength"</p>
                     </div>
                 </div>
+                
                 <div class="psalm-card">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/emcVpiXi2uk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/emcVpiXi2uk" allowfullscreen></iframe>
                     </div>
                     <div class="psalm-info">
                         <h3>Psalm 100</h3>
                         <p>"Shout for joy to the LORD"</p>
                     </div>
                 </div>
+                
                 <div class="psalm-card">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/1lYeAvdsAYg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/1lYeAvdsAYg" allowfullscreen></iframe>
                     </div>
                     <div class="psalm-info">
                         <h3>Psalm 139</h3>
@@ -545,40 +809,86 @@
         </div>
     </section>
 
-    <section class="for-churches-cta">
+    <!-- 95 Theses Preview -->
+    <section class="theses" id="theses">
         <div class="container">
-            <h2>Bring the Psalms to Your Church</h2>
-            <p>
-                Churches across the country are rediscovering the power of singing Scripture. 
-                Join the movement to restore the Psalms to Christian worship.
-            </p>
-            <a href="for-churches.html" class="cta-button">Learn More</a>
+            <div class="section-header">
+                <span class="section-label">Theological Foundation</span>
+                <h2>95 Theses on the Psalms</h2>
+                <p class="section-subtitle">A call to restore the Psalms to Christian worship.</p>
+            </div>
+            
+            <div class="theses-preview">
+                <blockquote>
+                    "The Psalter is not merely a book of poetry; it is the inspired worship manual 
+                    of the church, given by God Himself for His people to sing."
+                </blockquote>
+                <cite>— from the 95 Theses on the Psalms</cite>
+                
+                <div class="theses-cta">
+                    <a href="articles.html" class="btn-secondary">Read the Full Theses</a>
+                </div>
+            </div>
         </div>
     </section>
 
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Stay Connected</h2>
+            <p>Get new Psalm releases, resources, and articles delivered to your inbox.</p>
+            
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
+            <a href="#" class="footer-logo">
+                <img src="assets/logo-light.jpg" alt="South Florida Psalter">
+                <span>South Florida Psalter</span>
+            </a>
+            
+            <p class="footer-tagline">"Restore the Psalms to the Worship of the Church"</p>
+            
             <div class="footer-links">
-                <a href="index.html">Home</a>
-                <a href="psalms.html">Psalms</a>
-                <a href="chord-charts.html">Chord Charts</a>
-                <a href="review/">Review</a>
+                <a href="#">Home</a>
+                <a href="#psalms">Psalms</a>
+                <a href="#resources">Resources</a>
+                <a href="blog.html">Blog</a>
+                <a href="vision.html">Vision</a>
                 <a href="https://www.youtube.com/playlist?list=PLmCYMN7HLjZ3sptw2DLvvOjXMUJKG_FIv" target="_blank">YouTube</a>
             </div>
-            <p class="footer-tagline">Restoring the Psalms to the Worship of the Church</p>
+            
             <p class="copyright">© 2026 South Florida Psalter. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        function toggleMenu() {
-            const menu = document.getElementById('nav-menu');
-            menu.classList.toggle('active');
+        // Mobile Menu Toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-desktop').classList.toggle('active');
+        });
+
+        // Hero Slideshow
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
         }
-        
-        // Smooth scroll
+
+        setInterval(nextSlide, 5000);
+
+        // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
